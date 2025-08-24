@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="header">
+        <h2>Admin Dashboard (Fund Overview)</h2>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+
+    <div class="summary">
+        <p><strong>Total User Investment (Pool):</strong> ₹{{ "%.2f"|format(net_investment_pool) }}</p>
+        <p><strong>Current Total Portfolio Value:</strong> ₹{{ "%.2f"|format(last_updated_value) }}</p>
+        <p><strong>Overall Profit/Loss:</strong> ₹{{ "%.2f"|format(last_updated_value - net_investment_pool) }}</p>
+    </div>
+    
+    <h3>All Registered Users</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="2">No other users found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="admin-links">
+        <a href="{{ url_for('admin') }}">Update Portfolio Value</a> |
+        <a href="{{ url_for('add_transaction') }}">Add Transaction</a>
+    </div>
+{% endblock %}

@@ -1,0 +1,6 @@
+# Database file
+portfolio.db
+
+# Python cache files
+__pycache__/
+*.pyc

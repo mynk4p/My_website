@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h2>Admin Panel</h2>
+
+    <div class="summary">
+        <p><strong>Total User Investment (Pool):</strong> ₹{{ "%.2f"|format(net_investment_pool) }}</p>
+        <p><strong>Last Known Portfolio Value:</strong> ₹{{ "%.2f"|format(last_updated_value) }}</p>
+        <p><strong>Current NAV is approx:</strong> ₹{{ "%.4f"|format(current_nav) }}</p>
+    </div>
+    
+    <form method="POST">
+        <label for="total_value">Update Total Portfolio Value (Market Value):</label>
+        <input type="number" step="0.01" name="total_value" placeholder="e.g., {{ '%.2f'|format(last_updated_value) }}" required>
+        <button type="submit">Update Value</button>
+    </form>
+    
+    <p><a href="{{ url_for('dashboard') }}">Back to Dashboard</a></p>
+{% endblock %}

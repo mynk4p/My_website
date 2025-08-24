@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="header">
+        <h2>Welcome, {{ session.name }}</h2>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+
+    <div class="summary">
+        <p><strong>Net Invested:</strong> ₹{{ "%.2f"|format(net_invested) }}</p>
+        <p><strong>Current Value:</strong> ₹{{ "%.2f"|format(current_value) }}</p>
+        <p><strong>Profit/Loss:</strong> ₹{{ "%.2f"|format(profit_loss) }}</p>
+        <p><small>Based on current NAV of ₹{{ "%.4f"|format(current_nav) }}</small></p>
+    </div>
+    
+    <h3>Transaction History ("More Details")</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Type</th>
+                <th>Amount</th>
+                <th>Units</th>
+                <th>NAV at Transaction</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in history %}
+            <tr>
+                <td>{{ row.date }}</td>
+                <td>{{ row.type|capitalize }}</td>
+                <td>₹{{ "%.2f"|format(row.amount) }}</td>
+                <td>{{ "%.4f"|format(row.units) }}</td>
+                <td>₹{{ "%.4f"|format(row.nav_at_transaction) }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5">No transactions found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% if session.email == 'admin@fund.com' %}
+    <div class="admin-links">
+        <a href="{{ url_for('admin') }}">Admin Panel</a> |
+        <a href="{{ url_for('add_transaction') }}">Add Transaction</a>
+    </div>
+    {% endif %}
+{% endblock %}
